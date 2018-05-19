@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-dotenv.load();
+
 const express = require('express');
 const morgan = require('morgan');
 const debug = require("debug")("mockproxy:server");

@@ -14,7 +14,7 @@ request({
     debug('URL', 'http://www.smashingmagazine.com/');
     debug(`statusCode: ${response.statusCode}`);
     debug(`content-type: ${response.headers['content-type']}`);
-    debug(`all headers: ${JSON.stringify(response.headers)}`);
+    debug(`all headers: ${JSON.stringify(response.headers,, null, 2)}`);
     // debug('body', body);
 });
 
@@ -29,6 +29,6 @@ request({
     debug('URL', 'http://non.existing.url/');
     debug(`statusCode: ${response.statusCode}`);
     debug(`content-type: ${response.headers['content-type']}`);
-    debug(`all headers: ${JSON.stringify(response.headers)}`);
+    debug(`all headers: ${JSON.stringify(response.headers, null, 2)}`);
 
 });

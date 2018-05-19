@@ -2,13 +2,12 @@ const debug = require("debug")("mockproxy:storage");
 const _storage = {};
 const storageFactory = {
     create: function () {
-
         //init storage. temporarily in-memory
         return this;
     },
     get: function (key) {
         if (!key) {
-            return void 0;
+            return;
         }
         return _storage[key];
     },
