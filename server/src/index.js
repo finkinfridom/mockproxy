@@ -2,8 +2,21 @@ const express = require("express");
 const morgan = require("morgan");
 const debug = require("debug")("mockproxy:server");
 const errorhandler = require("errorhandler");
-const request = require("request");
 const bodyParser = require("body-parser");
+const zlib = require("zlib");
+const rootCas = require("ssl-root-cas").create();
+rootCas.addFile(__dirname + "/server.CA.key");
+
+const https = require("https");
+const http = require("http");
+// rootCas
+// 	.addFile(__dirname + "/ssl/01-cheap-ssl-intermediary-a.pem")
+// 	.addFile(__dirname + "/ssl/02-cheap-ssl-intermediary-b.pem");
+
+// default for all https requests
+// (whether using https directly, request, or another module)
+https.globalAgent.options.ca = rootCas;
+http.globalAgent.options.ca = rootCas;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,51 +49,89 @@ const reply = (authKey, requrl, req, res, next) => {
 			return;
 		}
 		if (!(docs && docs.length)) {
-			debug(`nothing stored`);
-			request(
-				{
-					url: requrl,
-					headers: req.headers
-				},
-				(error, response, body) => {
-					if (error) {
-						factory.save(
-							authKey,
-							requrl,
-							{
-								error
-							},
-							(err, doc) => {
-								debug(err, doc);
-								next(error);
-							}
-						);
-						return;
-					}
-					factory.save(
-						authKey,
-						requrl,
-						{
-							body,
-							headers: response.headers,
-							statusCode: response.statusCode
-						},
-						(err, doc) => {
-							if (err) {
-								res.status(500).send(err);
-								return;
-							}
-							res
-								.type(response.headers["content-type"])
-								.status(response.statusCode)
-								.send(body);
-						}
-					);
-				}
+			const parsed = url.parse(requrl);
+			const headersOptions = {
+				"x-proxy-name": "mockproxy",
+				"cache-control": "no-cache",
+				accept: "*/*",
+				"Accept-Encoding": "gzip, deflate, br"
+			};
+			if (req.headers["content-type"]) {
+				headersOptions["content-type"] = req.headers["content-type"];
+			}
+			if (req.headers["accept-language"]) {
+				headersOptions["accept-language"] = req.headers["accept-language"];
+			}
+			if (req.headers["user-agent"]) {
+				headersOptions["user-agent"] = req.headers["user-agent"];
+			}
+			const requestOptions = {
+				host: parsed.host,
+				port: parsed.port || parsed.protocol === "http" ? 80 : 443,
+				path: parsed.path,
+				method: "GET",
+				headers: headersOptions
+			};
+			debug(
+				`nothing stored for ${JSON.stringify(requestOptions)} ${JSON.stringify(
+					headersOptions
+				)}`
 			);
+
+			(parsed.protocol === "http" ? http : https)
+				.request(requestOptions, response => {
+					const chunks = [];
+					response.on("data", function(chunk) {
+						chunks.push(chunk);
+					});
+					response
+						.on("end", () => {
+							const buffer = Buffer.concat(chunks);
+							const encoding = response.headers["content-encoding"];
+							let body = undefined;
+							debug(`encoding ${encoding}`);
+							if (encoding == "gzip") {
+								body = zlib.gunzipSync(buffer).toString();
+							} else if (encoding == "deflate") {
+								body = zlib.inflateSync(buffer).toString();
+							} else if (encoding == "br") {
+								body = zlib.brotliDecompressSync(buffer).toString();
+							} else {
+								body = buffer.toString();
+							}
+							debug(`stored body: ${body}`);
+							factory.save(
+								authKey,
+								requrl,
+								{
+									body,
+									headers: response.headers,
+									statusCode: response.statusCode
+								},
+								(err, doc) => {
+									if (err) {
+										response.status(500).send(err);
+										return;
+									}
+									res
+										.type(response.headers["content-type"])
+										.status(response.statusCode)
+										.send(body);
+								}
+							);
+						})
+						.on("error", () => {
+							console.log("res", arguments);
+						});
+				})
+				.end();
 			return;
 		}
 		const storedValue = docs[0];
+		if (!(storedValue.body && storedValue.headers && storedValue.statusCode)) {
+			res.set(500).send("mandatory info are missing from db");
+			return;
+		}
 		debug("from storage");
 		if (storedValue.error) {
 			next(storedValue.error);

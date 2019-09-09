@@ -8,6 +8,7 @@ COPY ./package.json .
 COPY ./yarn.lock .
 COPY ./tsconfig.json .
 COPY ./tslint.json .
+COPY ./server.CA.key .
 
 FROM base as dependencies
 RUN yarn install --production --no-progress --pure-lockfile
