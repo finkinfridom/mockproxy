@@ -151,11 +151,27 @@ debug@2.6.9:
   dependencies:
     ms "2.0.0"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+=======
 debug@3.1.0, debug@^3.1.0:
+=======
+debug@3.1.0:
+>>>>>>> 521b9d71fbe62d9199b427dd0e27ec6b5513cc7e
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+>>>>>>> master
   dependencies:
-    ms "2.0.0"
+    ms "^2.1.1"
+
+debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  dependencies:
+    ms "^2.1.1"
 
 delayed-stream@~1.0.0:
   version "1.0.0"
@@ -499,7 +515,15 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+ms@^2.1.1:
+=======
 ms@2.1.2:
+>>>>>>> master
+=======
+ms@2.1.2, ms@^2.1.1:
+>>>>>>> 521b9d71fbe62d9199b427dd0e27ec6b5513cc7e
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
 
