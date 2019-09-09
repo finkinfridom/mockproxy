@@ -1,0 +1,9 @@
+{
+	"addons": [],
+	"buildpacks": [],
+	"env": {},
+	"formation": {},
+	"name": "mockproxy",
+	"scripts": {},
+	"stack": "heroku-18"
+}

@@ -1,9 +1,9 @@
 {
-	"name": "MockProxy",
+	"name": "mockproxy",
 	"version": "1.0.0",
 	"description": "easily mock requests from your application to any external APIs",
 	"main": "index.js",
-	"repository": "https://github.com/finkinfridom/MockProxy.git",
+	"repository": "https://github.com/finkinfridom/mockproxy.git",
 	"author": "Alberto Maghini",
 	"license": "ISC",
 	"scripts": {

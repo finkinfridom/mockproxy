@@ -1,18 +1,18 @@
 {
-	"name": "MockProxy",
+	"name": "mockproxy",
 	"version": "1.0.0",
 	"description": "easily mock requests from your application to any external APIs",
 	"main": "index.js",
-	"repository": "https://github.com/finkinfridom/MockProxy.git",
+	"repository": "https://github.com/finkinfridom/mockproxy.git",
 	"author": "Alberto Maghini",
 	"license": "ISC",
 	"scripts": {
 		"lint": "tslint -c tslint.json 'src/**/*.ts'",
-		"pretest": "yarn run lint && tsc",
-		"prestart": "yarn run pretest",
+		"src-build": "tsc",
 		"start": "node src/index.js"
 	},
 	"dependencies": {
+		"body-parser": "^1.19.0",
 		"debug": "^3.1.0",
 		"dotenv": "^5.0.1",
 		"errorhandler": "^1.5.0",
