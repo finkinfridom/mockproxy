@@ -7,7 +7,7 @@ dotenv.load();
 const storageFactory = {
 	create() {
 		mongoose.connect(
-			process.env.CONN_STRING || "mongodb://localhost:27017/mockproxy"
+			process.env.MONGODB_URI || "mongodb://localhost:27017/mockproxy"
 		);
 		return this;
 	},
