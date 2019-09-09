@@ -3,6 +3,11 @@ const morgan = require("morgan");
 const debug = require("debug")("mockproxy:server");
 const errorhandler = require("errorhandler");
 const bodyParser = require("body-parser");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./config/swagger.js");
+const package = require("./package.json");
+const url = require("url");
+const storage = require("./storage/factory");
 const zlib = require("zlib");
 const rootCas = require("ssl-root-cas").create();
 rootCas.addFile(__dirname + "/server.CA.key");
@@ -22,11 +27,14 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
+app.use(
+	"/documentation",
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocument.options)
+);
 require("dotenv").config();
 app.set("etag", false);
 app.disable("x-powered-by");
-const url = require("url");
-const storage = require("./storage/factory");
 const factory = storage.create();
 const PORT = process.env.PORT || 3000;
 debug("environment:" + process.env.NODE_ENV);
@@ -144,15 +152,16 @@ const reply = (authKey, requrl, req, res, next) => {
 	});
 };
 app.get("/", (req, res) => {
-	res
-		.type("text/html")
-		.status(200)
-		.send("Welcome to MockProxy");
+	res.send({
+		name: package.name,
+		version: package.version,
+		documentation: "/documentation"
+	});
 });
 app.get("/favicon.ico", (req, res) => {
 	res.sendStatus(200);
 });
-app.post("/:mp_key", (req, res) => {
+app.post("/api/v1/:mp_key", (req, res) => {
 	const { basePath } = req.body;
 	if (!basePath) {
 		res.status(500).send("No basePath provided");
@@ -166,7 +175,7 @@ app.post("/:mp_key", (req, res) => {
 		res.sendStatus(200);
 	});
 });
-app.get("/:mp_key/*", (req, res, next) => {
+app.get("/api/v1/:mp_key/*", (req, res, next) => {
 	if (!req.params.mp_key) {
 		res.set(403).send("no mp_key found in path");
 		return;
@@ -186,7 +195,7 @@ app.get("/:mp_key/*", (req, res, next) => {
 		reply(req.params.mp_key, requrl, req, res, next);
 	});
 });
-app.get("/:path", (req, res, next) => {
+app.get("/api/v1/:path", (req, res, next) => {
 	if (!req.headers.mp_key) {
 		res.status(403).send("no mp_key found in headers");
 		return;
