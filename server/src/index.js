@@ -30,7 +30,6 @@ const getParams = (req, basePath, path) => {
 
 const reply = (authKey, requrl, req, res, next) => {
 	debug(`URL requested: ${requrl}`);
-
 	factory.get(authKey, requrl).exec((err, docs) => {
 		if (err) {
 			res.status(500).send(err);
