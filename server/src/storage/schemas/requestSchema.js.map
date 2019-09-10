@@ -1,1 +1,0 @@
-{"version":3,"file":"requestSchema.js","sourceRoot":"","sources":["requestSchema.ts"],"names":[],"mappings":";;AAAA,uCAAkC;AAErB,QAAA,aAAa,GAAW,IAAI,iBAAM,CAAC;IAC/C,GAAG,EAAE,MAAM;IACX,GAAG,EAAE,MAAM;IACX,IAAI,EAAE,MAAM;CACZ,CAAC,CAAC;AAEH,qBAAa,CAAC,KAAK,CAAC,EAAE,GAAG,EAAE,CAAC,CAAC,EAAE,GAAG,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC"}
