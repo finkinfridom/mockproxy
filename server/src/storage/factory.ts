@@ -1,39 +1,59 @@
-const debug = require("debug")("mockproxy:storage");
-
 import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
-import { RequestModel } from "./models";
+import { RequestModel, KeyModel } from "./models";
+const debug = require("debug")("mockproxy:factory");
 dotenv.load();
 
 const storageFactory = {
-	create: function() {
+	create() {
 		mongoose.connect(
-			`mongodb://${process.env.DB_USER}:${process.env.DB_PWD}@${
-				process.env.DB_HOST
-			}/${process.env.DB_DATABASE}`
+			process.env.MONGODB_URI || "mongodb://localhost:27017/mockproxy"
 		);
 		return this;
 	},
-	get: function(key: string) {
+	saveBasePath(key: string, basePath: string, callback: any) {
+		if (!(key && basePath)) {
+			return false;
+		}
+		KeyModel.findOneAndUpdate(
+			{ key },
+			{ $set: { basePath } },
+			{ upsert: true },
+			callback
+		);
+		return true;
+	},
+	getBasePath(key: string) {
 		if (!key) {
 			return;
 		}
-		return RequestModel.find(key);
-		/* return _storage[key]; */
+		return KeyModel.find({ key });
 	},
-	getSecret: function(authKey: string, url: string, headers: object) {
-		return `${authKey}_${url}_${JSON.stringify(headers)}`;
+	get(key: string, url: string) {
+		if (!key) {
+			return;
+		}
+		return RequestModel.find({ key, url });
 	},
-	save: function(key: string, value: any) {
+	getRequests(key: string) {
+		if (!key) {
+			return;
+		}
+		return RequestModel.find({ key });
+	},
+	getKeys() {
+		return KeyModel.find();
+	},
+	save(key: string, url: string, value: any, callback: any) {
 		if (!key) {
 			return false;
 		}
 		RequestModel.findOneAndUpdate(
-			{ storageKey: key },
-			{ body: value },
-			{ upsert: true }
+			{ key, url },
+			{ $set: value },
+			{ upsert: true },
+			callback
 		);
-		/* _storage[key] = value; */
 		return true;
 	}
 };

@@ -2,8 +2,10 @@ import { Schema } from "mongoose";
 
 export const RequestSchema: Schema = new Schema({
 	url: String,
+	key: String,
 	body: Object,
-	storageKey: String
+	headers: Object,
+	statusCode: Number
 });
 
-RequestSchema.index({ storageKey: -1 });
+RequestSchema.index({ url: -1, key: -1 });
