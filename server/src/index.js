@@ -75,7 +75,7 @@ const reply = (authKey, requrl, req, res, next) => {
 			}
 			const requestOptions = {
 				host: parsed.host,
-				port: parsed.port || parsed.protocol === "http" ? 80 : 443,
+				port: parsed.port || parsed.protocol === "http:" ? 80 : 443,
 				path: parsed.path,
 				method: "GET",
 				headers: headersOptions
@@ -86,7 +86,7 @@ const reply = (authKey, requrl, req, res, next) => {
 				)}`
 			);
 
-			(parsed.protocol === "http" ? http : https)
+			(parsed.protocol === "http:" ? http : https)
 				.request(requestOptions, response => {
 					const chunks = [];
 					response.on("data", function(chunk) {
