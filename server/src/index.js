@@ -132,6 +132,9 @@ const reply = (authKey, requrl, req, res, next) => {
 							console.log("res", arguments);
 						});
 				})
+				.on("error", err => {
+					res.status(500).send(err);
+				})
 				.end();
 			return;
 		}
@@ -161,6 +164,42 @@ app.get("/", (req, res) => {
 app.get("/favicon.ico", (req, res) => {
 	res.sendStatus(200);
 });
+app.get("/api/v1/keys", (req, res, next) => {
+	factory.getKeys().exec((err, docs) => {
+		if (err) {
+			res.status(500).send(err);
+			return;
+		}
+		res.send(
+			docs.map(d => {
+				return { key: d.key, basePath: d.basePath };
+			})
+		);
+	});
+});
+app.get("/api/v1/requests/:mp_key", (req, res, next) => {
+	const authKey = req.params.mp_key;
+	if (!authKey) {
+		res.status(500).send("No mp_key provided");
+		return;
+	}
+	factory.getRequests(authKey).exec((err, docs) => {
+		if (err) {
+			res.status(500).send(err);
+			return;
+		}
+		res.send(
+			docs.map(d => {
+				return {
+					key: d.key,
+					url: d.url,
+					statusCode: d.statusCode,
+					body: d.body
+				};
+			})
+		);
+	});
+});
 app.post("/api/v1/:mp_key", (req, res) => {
 	const { basePath } = req.body;
 	if (!basePath) {
@@ -172,7 +211,7 @@ app.post("/api/v1/:mp_key", (req, res) => {
 			res.set(500).send(err);
 			return;
 		}
-		res.sendStatus(200);
+		res.send({ saved: true });
 	});
 });
 app.get("/api/v1/:mp_key/*", (req, res, next) => {
@@ -194,19 +233,6 @@ app.get("/api/v1/:mp_key/*", (req, res, next) => {
 		const { requrl } = getParams(req, basePath, path);
 		reply(req.params.mp_key, requrl, req, res, next);
 	});
-});
-app.get("/api/v1/:path", (req, res, next) => {
-	if (!req.headers.mp_key) {
-		res.status(403).send("no mp_key found in headers");
-		return;
-	}
-	const basePath = (factory.getBasePath(req.headers.mp_key) || {}).basePath;
-	if (!basePath) {
-		res.status(404).send(`No basepath found for ${req.params.mp_key}`);
-		return;
-	}
-	const { requrl } = getParams(req, basePath, req.params.path);
-	reply(req.headers.mp_key, requrl, req, res, next);
 });
 app.listen(PORT, () => {
 	debug("server listening on port " + PORT);

@@ -35,6 +35,15 @@ const storageFactory = {
 		}
 		return RequestModel.find({ key, url });
 	},
+	getRequests(key: string) {
+		if (!key) {
+			return;
+		}
+		return RequestModel.find({ key });
+	},
+	getKeys() {
+		return KeyModel.find();
+	},
 	save(key: string, url: string, value: any, callback: any) {
 		if (!key) {
 			return false;
