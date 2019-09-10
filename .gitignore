@@ -289,3 +289,7 @@ __pycache__/
 
 .env
 .vscode
+*.js
+*.js.map
+!server/src/config/swagger.js
+!server/src/index.js
