@@ -9,4 +9,4 @@ export const RequestSchema: Schema = new Schema({
 	statusCode: Number
 });
 
-RequestSchema.index({ url: -1, key: -1 });
+RequestSchema.index({ codedUrl: -1, key: -1 });
