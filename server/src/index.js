@@ -74,6 +74,10 @@ const reply = (authKey, requrl, req, res, next) => {
 			if (req.headers["user-agent"]) {
 				headersOptions["user-agent"] = req.headers["user-agent"];
 			}
+			if (req.headers["Authorization"] || req.headers["authorization"]) {
+				headersOptions["Authorization"] =
+					req.headers["Authorization"] || req.headers["authorization"];
+			}
 			const requestOptions = {
 				host: parsed.host,
 				port: parsed.port || parsed.protocol === "http:" ? 80 : 443,
@@ -129,8 +133,8 @@ const reply = (authKey, requrl, req, res, next) => {
 								}
 							);
 						})
-						.on("error", () => {
-							console.log("res", arguments);
+						.on("error", e => {
+							debug(`res ${e}`);
 						});
 				})
 				.on("error", err => {
