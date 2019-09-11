@@ -1,8 +1,10 @@
-import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
 import { RequestModel, KeyModel } from "./models";
-const debug = require("debug")("mockproxy:factory");
-dotenv.load();
+require("dotenv").config();
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
+mongoose.set("useUnifiedTopology", true);
 
 const storageFactory = {
 	create() {
