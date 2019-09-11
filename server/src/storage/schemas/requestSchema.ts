@@ -1,7 +1,8 @@
 import { Schema } from "mongoose";
 
 export const RequestSchema: Schema = new Schema({
-	url: String,
+	codedUrl: String,
+	originalUrl: String,
 	key: String,
 	body: Object,
 	headers: Object,

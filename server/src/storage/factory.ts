@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
 import { RequestModel, KeyModel } from "./models";
+const btoa = require("btoa");
 require("dotenv").config();
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
@@ -35,7 +36,8 @@ const storageFactory = {
 		if (!key) {
 			return;
 		}
-		return RequestModel.find({ key, url });
+		const codedUrl = btoa(url);
+		return RequestModel.find({ key, codedUrl });
 	},
 	getRequests(key: string) {
 		if (!key) {
@@ -50,9 +52,15 @@ const storageFactory = {
 		if (!key) {
 			return false;
 		}
+		const codedUrl = btoa(url);
 		RequestModel.findOneAndUpdate(
-			{ key, url },
-			{ $set: value },
+			{ key, codedUrl },
+			{
+				$set: {
+					originalUrl: url,
+					...value
+				}
+			},
 			{ upsert: true },
 			callback
 		);
