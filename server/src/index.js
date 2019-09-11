@@ -123,7 +123,7 @@ const reply = (authKey, requrl, req, res, next) => {
 								},
 								(err, doc) => {
 									if (err) {
-										response.status(500).send(err);
+										res.status(500).send(err);
 										return;
 									}
 									res
@@ -134,7 +134,7 @@ const reply = (authKey, requrl, req, res, next) => {
 							);
 						})
 						.on("error", e => {
-							debug(`res ${e}`);
+							debug(`error ${e}`);
 						});
 				})
 				.on("error", err => {
