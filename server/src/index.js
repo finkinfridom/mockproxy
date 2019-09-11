@@ -45,7 +45,8 @@ if (process.env.NODE_ENV === "development") {
 
 const getParams = (req, basePath, path) => {
 	const querystring = url.parse(req.url).search || "";
-	const requrl = `${basePath}/${path}${querystring}`;
+	path = path ? `/${path}` : "";
+	const requrl = `${basePath}${path}${querystring}`;
 	return { querystring, path, requrl };
 };
 
@@ -214,7 +215,7 @@ app.post("/api/v1/:mp_key", (req, res) => {
 		res.send({ saved: true });
 	});
 });
-app.get("/api/v1/:mp_key/*", (req, res, next) => {
+const manageGetRoute = (req, res, next) => {
 	if (!req.params.mp_key) {
 		res.set(403).send("no mp_key found in path");
 		return;
@@ -233,7 +234,9 @@ app.get("/api/v1/:mp_key/*", (req, res, next) => {
 		const { requrl } = getParams(req, basePath, path);
 		reply(req.params.mp_key, requrl, req, res, next);
 	});
-});
+};
+app.get("/api/v1/:mp_key", manageGetRoute);
+app.get("/api/v1/:mp_key/*", manageGetRoute);
 app.listen(PORT, () => {
 	debug("server listening on port " + PORT);
 });
