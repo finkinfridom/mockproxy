@@ -19,10 +19,4 @@ Given the initial idea of mocking data needed for an application, currently GET 
 1.  Begin using `mockproxy` as the public API for your just created key above to retrieve (and store) mock data
 
         curl -X GET \
-        https://mockproxy.herokuapp.com/api/v1/jsonplaceholder/comments \
-        -H 'Accept: */*' \
-        -H 'Accept-Encoding: gzip, deflate' \
-        -H 'Cache-Control: no-cache' \
-        -H 'Connection: keep-alive' \
-        -H 'Content-Type: application/json' \
-        -H 'cache-control: no-cache'
+        https://mockproxy.herokuapp.com/api/v1/jsonplaceholder/comments
