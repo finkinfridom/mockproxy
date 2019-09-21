@@ -31,7 +31,10 @@
 
 <script>
 export default {
-  name: "MainLayout"
+  name: "MainLayout",
+  data: () => ({
+    menuVisible: false
+  })
 };
 </script>
 

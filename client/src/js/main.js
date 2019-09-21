@@ -10,8 +10,12 @@ import "vue-material/dist/theme/default.css";
 Vue.use(VueMaterial);
 
 const routes = {
-	"/": "Home",
-	"/keys": "Keys"
+	"/": () => {
+		return require("../pages/Home.vue").default;
+	}
+	// "/keys": () => {
+	// 	return require("../pages/Keys.vue");
+	// }
 	// "/keys": Key
 };
 new Vue({
@@ -22,11 +26,9 @@ new Vue({
 	computed: {
 		ViewComponent() {
 			const matchingView = routes[this.currentRoute];
-			console.log(matchingView, this.currentRoute, __dirname);
-
 			return matchingView
-				? require("../pages/" + matchingView + ".vue")
-				: require("../pages/404.vue");
+				? matchingView()
+				: require("../pages/404.vue").default;
 		}
 	},
 	render(h) {
