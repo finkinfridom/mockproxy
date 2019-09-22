@@ -1,6 +1,8 @@
 <template>
-  <div class="page-container">
-    <md-app md-mode="reveal">
+  <md-app id="app" md-mode="reveal">
+    <router-view></router-view>
+  </md-app>
+  <!-- <div class="page-container">
       <md-app-toolbar class="md-primary">
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
@@ -35,10 +37,11 @@
 
       <router-view></router-view>
     </md-app>
-  </div>
+  </div>-->
 </template>
 
 <script>
+console.log("outer");
 export default {
   data: () => ({
     menuVisible: false

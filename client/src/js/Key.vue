@@ -8,7 +8,7 @@
       <md-card-content>{{data.basePath}}</md-card-content>
 
       <md-card-actions>
-        <md-button class="md-raised md-primary">Detail</md-button>
+        <md-button class="md-raised md-primary">Requests</md-button>
         <md-button class="md-raised">Edit</md-button>
         <md-button class="md-raised md-accent">Delete</md-button>
       </md-card-actions>

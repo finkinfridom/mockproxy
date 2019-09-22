@@ -1,41 +1,38 @@
 import Vue from "vue";
-//import App from "./App";
-// import Key from "./Key";
+import VueRouter from "vue-router";
+
 Vue.config.productionTip = false;
 
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
-
+Vue.use(VueRouter);
 Vue.use(VueMaterial);
 
-const routes = {
-	"/": () => {
-		return require("../pages/Home.vue").default;
+import App from "./app";
+import Home from "../pages/Home";
+const routes = [
+	{
+		path: "/",
+		component: Home
+		// children: [
+		// 	{
+		// 		path: "",
+		// 		name: "home",
+		// 		component: Home
+		// 	},
+		// 	{
+		// 		path: "*",
+		// 		component: require("../pages/404.vue")
+		// 	}
+		// ]
 	}
-	// "/keys": () => {
-	// 	return require("../pages/Keys.vue");
-	// }
-	// "/keys": Key
-};
+];
+const router = new VueRouter({
+	routes,
+	mode: "history"
+});
 new Vue({
-	el: "#app",
-	data: {
-		currentRoute: window.location.pathname
-	},
-	computed: {
-		ViewComponent() {
-			const matchingView = routes[this.currentRoute];
-			return matchingView
-				? matchingView()
-				: require("../pages/404.vue").default;
-		}
-	},
-	render(h) {
-		return h(this.ViewComponent);
-	}
-});
-
-window.addEventListener("popstate", () => {
-	app.currentRoute = window.location.pathname;
-});
+	router,
+	render: h => h(App)
+}).$mount("#app");
