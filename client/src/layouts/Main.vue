@@ -21,6 +21,11 @@
             <md-icon>flash_on</md-icon>
             <span class="md-list-item-text">Requests</span>
           </md-list-item>
+          <md-divider></md-divider>
+          <md-list-item>
+            <md-icon>description</md-icon>
+            <span class="md-list-item-text">Docs</span>
+          </md-list-item>
         </md-list>
       </md-app-drawer>
 

@@ -14,6 +14,7 @@
 import Key from "../js/Key";
 import NoKeys from "../js/NoKeys";
 import MainLayout from "../layouts/Main";
+import axios from "axios";
 export default {
   name: "Home",
   components: {
@@ -23,7 +24,12 @@ export default {
   },
   data: () => ({
     menuVisible: false,
-    keys: [{ key: "Test1", basePath: "https://www.google.com" }]
-  })
+    keys: undefined
+  }),
+  mounted() {
+    axios
+      .get("https://mockproxy.herokuapp.com/api/v1/keys")
+      .then(response => (this.keys = response));
+  }
 };
 </script>
