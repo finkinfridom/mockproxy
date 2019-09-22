@@ -1,0 +1,29 @@
+{
+	"name": "mockproxy-client",
+	"version": "1.0.0",
+	"description": "backoffice UI",
+	"main": "index.js",
+	"repository": "https://github.com/finkinfridom/mockproxy.git",
+	"author": "Alberto Maghini",
+	"license": "ISC",
+	"scripts": {
+		"dev": "parcel src/index.html",
+		"watch": "parcel watch src/index.html",
+		"production": "parcel build src/index.html"
+	},
+	"dependencies": {
+		"axios": "^0.19.0",
+		"vue": "^2.6.10",
+		"vue-hot-reload-api": "^2.3.4",
+		"vue-material": "^1.0.0-beta-11"
+	},
+	"devDependencies": {
+		"@vue/component-compiler-utils": "^3.0.0",
+		"parcel-bundler": "^1.12.3",
+		"sass": "^1.22.12",
+		"vue-template-compiler": "^2.6.10"
+	},
+	"alias": {
+		"vue": "./node_modules/vue/dist/vue.common.js"
+	}
+}

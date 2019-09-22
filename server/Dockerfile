@@ -1,7 +1,7 @@
 FROM node:alpine as base
 
-RUN mkdir /src
-WORKDIR /src
+RUN mkdir /app
+WORKDIR /app
 
 ENV PATH ./node_modules/.bin:$PATH
 COPY ./package.json .
@@ -17,15 +17,15 @@ RUN yarn install
 
 # Test
 FROM dependencies as test
-COPY /src .
+COPY /src ./src
 RUN yarn lint
 RUN yarn src-build
 
 # Release
 FROM base as release
-COPY --from=dependencies /src/prod_node_modules /src/node_modules
-COPY --from=test /src /src
-COPY /src/index.js /src/index.js
+COPY --from=dependencies /src/prod_node_modules ./src/node_modules
+COPY --from=test /src ./src
+COPY /src/index.js ./src/index.js
 
 
 

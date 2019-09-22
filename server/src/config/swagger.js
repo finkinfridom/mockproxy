@@ -1,4 +1,4 @@
-const package = require("../package.json");
+const package = require("../../package.json");
 exports.options = {
 	swagger: "2.0",
 	basePath: "/",

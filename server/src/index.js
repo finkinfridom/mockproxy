@@ -5,21 +5,16 @@ const errorhandler = require("errorhandler");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./config/swagger.js");
-const package = require("./package.json");
+const path = require("path");
+const package = require("../package.json");
 const url = require("url");
 const storage = require("./storage/factory");
 const zlib = require("zlib");
 const rootCas = require("ssl-root-cas").create();
-rootCas.addFile(__dirname + "/server.CA.key");
+rootCas.addFile(path.join(__dirname, "../server.CA.key"));
 
 const https = require("https");
 const http = require("http");
-// rootCas
-// 	.addFile(__dirname + "/ssl/01-cheap-ssl-intermediary-a.pem")
-// 	.addFile(__dirname + "/ssl/02-cheap-ssl-intermediary-b.pem");
-
-// default for all https requests
-// (whether using https directly, request, or another module)
 https.globalAgent.options.ca = rootCas;
 http.globalAgent.options.ca = rootCas;
 

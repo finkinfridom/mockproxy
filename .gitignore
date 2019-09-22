@@ -291,5 +291,7 @@ __pycache__/
 .vscode
 *.js
 *.js.map
+client/**/dist
 !server/src/config/swagger.js
-!server/src/index.js
+!client/**/*.js
+.cache
