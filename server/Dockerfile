@@ -17,18 +17,16 @@ RUN yarn install
 
 # Test
 FROM dependencies as test
-COPY /src ./src
+COPY ./src ./src
 RUN yarn lint
 RUN yarn src-build
 
 # Release
 FROM base as release
-COPY --from=dependencies /src/prod_node_modules ./src/node_modules
-COPY --from=test /src ./src
+COPY --from=dependencies ./app/prod_node_modules node_modules
+COPY --from=test ./app/src ./src
 COPY /src/index.js ./src/index.js
-
-
 
 EXPOSE 3000
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "src/index.js" ]

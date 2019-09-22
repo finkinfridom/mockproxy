@@ -1,7 +1,8 @@
 import * as mongoose from "mongoose";
 import { RequestModel, KeyModel } from "./models";
-const btoa = require("btoa");
-require("dotenv").config();
+import btoa = require("btoa");
+import dotenv = require("dotenv");
+dotenv.config();
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);

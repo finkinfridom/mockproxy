@@ -15,10 +15,12 @@ rootCas.addFile(path.join(__dirname, "../server.CA.key"));
 
 const https = require("https");
 const http = require("http");
+const cors = require("cors");
 https.globalAgent.options.ca = rootCas;
 http.globalAgent.options.ca = rootCas;
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
