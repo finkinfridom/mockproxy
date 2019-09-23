@@ -5,7 +5,7 @@
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button>
-        <span class="md-title">MockProxy</span>
+        <router-link class="md-title" to="/">MockProxy</router-link>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">

@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import Key from "@/components/Key";
-import NoKeys from "@/components/NoKeys";
+import Key from "@/components/keys/Key";
+import NoKeys from "@/components/keys/NoKeys";
 import { serverMixin } from "@/mixins/serverMixin";
 export default {
   name: "home",
