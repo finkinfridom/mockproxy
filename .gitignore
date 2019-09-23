@@ -292,7 +292,6 @@ __pycache__/
 *.js
 *.js.map
 !server/src/config/swagger.js
-client/**/dist
-!client/**/*.js
+ui/**/dist
 !ui/**/*.js
 .cache
