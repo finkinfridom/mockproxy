@@ -1,0 +1,18 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<ng-container>
+  <mat-toolbar class="example-header">Header</mat-toolbar>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav [mode]="over">Toggle</mat-sidenav>
+    <mat-sidenav-content>
+      <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <router-outlet></router-outlet>
+</ng-container>
