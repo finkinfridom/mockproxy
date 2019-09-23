@@ -194,7 +194,8 @@ app.get("/api/v1/requests/:mp_key", (req, res, next) => {
 			docs.map(d => {
 				return {
 					key: d.key,
-					url: d.url,
+					originalUrl: d.originalUrl,
+					codedUrl: d.codedUrl,
 					statusCode: d.statusCode,
 					body: d.body
 				};
