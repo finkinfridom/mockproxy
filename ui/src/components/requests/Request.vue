@@ -3,16 +3,18 @@
     <md-card-header>
       <div class="md-title">
         URL:
-        <a :href="data.originalUrl" target="_blank">{{data.originalUrl}}</a>
+        <a :href="data.originalUrl" target="_blank">{{ data.originalUrl }}</a>
       </div>
     </md-card-header>
     <md-card-actions>
-      <md-button class="md-primary md-raised" @click="showDialog = true">Show info</md-button>
+      <md-button class="md-primary md-raised" @click="showDialog = true"
+        >Show info</md-button
+      >
     </md-card-actions>
     <md-dialog :md-active.sync="showDialog">
       <div>
-        <span>StatusCode: {{data.statusCode}}</span>
-        <pre>{{data.body}}</pre>
+        <span>StatusCode: {{ data.statusCode }}</span>
+        <pre>{{ data.body }}</pre>
         <md-dialog-actions>
           <md-button class="md-primary">Edit</md-button>
           <md-button class="md-accent">Delete</md-button>
@@ -22,7 +24,6 @@
     </md-dialog>
   </md-card>
 </template>
-
 
 <script>
 export default {
