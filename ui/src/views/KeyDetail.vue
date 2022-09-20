@@ -39,7 +39,7 @@ export default {
     this.getServerRequests();
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.getServerRequests();
     }
   },
