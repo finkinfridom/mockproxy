@@ -1,10 +1,14 @@
 <template>
   <div v-if="loaded">
     <md-toolbar class="md-dense">
-      <h3 class="md-title">{{key}}</h3>
+      <h3 class="md-title">{{ key }}</h3>
     </md-toolbar>
-    <div class="home" v-if="(requests&&requests.length)">
-      <Request v-for="request in requests" :data="request" v-bind:key="request.codedUrl" />
+    <div class="home" v-if="requests && requests.length">
+      <Request
+        v-for="request in requests"
+        :data="request"
+        v-bind:key="request.codedUrl"
+      />
     </div>
     <div class="home" v-else>
       <NoRequests />

@@ -1,6 +1,6 @@
 <template>
   <div v-if="loaded">
-    <div class="home" v-if="(keys&&keys.length)">
+    <div class="home" v-if="keys && keys.length">
       <Key v-for="key in keys" :data="key" v-bind:key="key.key" />
     </div>
     <div class="home" v-else>

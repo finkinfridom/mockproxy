@@ -11,15 +11,19 @@
     />
     <md-card>
       <md-card-header>
-        <div class="md-title">{{data.key}}</div>
+        <div class="md-title">{{ data.key }}</div>
       </md-card-header>
 
-      <md-card-content>{{data.basePath}}</md-card-content>
+      <md-card-content>{{ data.basePath }}</md-card-content>
 
       <md-card-actions>
-        <md-button class="md-raised md-primary" :to="detailUrl">Requests</md-button>
+        <md-button class="md-raised md-primary" :to="detailUrl"
+          >Requests</md-button
+        >
         <md-button class="md-raised" :to="editUrl">Edit</md-button>
-        <md-button class="md-raised md-accent" @click="active = true">Delete</md-button>
+        <md-button class="md-raised md-accent" @click="active = true"
+          >Delete</md-button
+        >
       </md-card-actions>
     </md-card>
   </div>
