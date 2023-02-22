@@ -12,7 +12,7 @@
 		"start": "node src/index.js"
 	},
 	"dependencies": {
-		"body-parser": "^1.20.0",
+		"body-parser": "^1.20.2",
 		"btoa": "^1.2.1",
 		"cors": "^2.8.5",
 		"debug": "^4.3.4",
